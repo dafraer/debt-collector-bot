@@ -1,33 +1,31 @@
 package main
 
 import (
-	"collector/src/tgspam"
-	"context"
-	"fmt"
-	"github.com/chromedp/chromedp"
+	"log"
+
+	"github.com/celestix/gotgproto"
+	"github.com/celestix/gotgproto/sessionMaker"
+	"github.com/glebarez/sqlite"
 )
 
 func main() {
-	opts := append(chromedp.DefaultExecAllocatorOptions[:],
-		chromedp.Flag("headless", false), // Set to false to run Chrome in a non-headless mode
-		chromedp.Flag("disable-gpu", true),
-		chromedp.Flag("no-sandbox", true),
+	client, err := gotgproto.NewClient(
+		// Get AppID from https://my.telegram.org/apps
+		21326414,
+		// Get ApiHash from https://my.telegram.org/apps
+		"311562b87b3326cb20a864529520a121",
+		// ClientType, as we defined above
+		gotgproto.ClientTypePhone("+995557627581"),
+		// Optional parameters of client
+		&gotgproto.ClientOpts{
+			Session: sessionMaker.SqlSession(sqlite.Open("reminderbot")),
+		},
 	)
-
-	// Setup context and chromedp
-	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), opts...)
-	defer cancel()
-
-	ctx, cancel := chromedp.NewContext(allocCtx)
-	defer cancel()
-
-	username := "fiodop"
-	message := "Hello, this is a test message!"
-
-	// Send message
-	if err := tgspam.SendMessage(ctx, username, message); err != nil {
-		fmt.Println("Failed to send message:", err)
-	} else {
-		fmt.Println("Message sent successfully!")
+	if err != nil {
+		log.Fatalln("failed to start client:", err)
 	}
+	if err := client.Idle(); err != nil {
+		log.Fatalln(err)
+	}
+
 }
