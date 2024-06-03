@@ -1,9 +1,11 @@
 package tgspam
 
-import (
-	"context"
-)
-
-func SendMessage(ctx context.Context, username, message string) error {
+func SendMessage(username, message string) error {
 	return nil
 }
+
+func changeAccount(accountNumber int) error {
+	return nil
+}
+
+func
