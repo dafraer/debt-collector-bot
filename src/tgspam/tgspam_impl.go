@@ -13,10 +13,11 @@ func OpenTelegram() error {
 	robotgo.Click()
 	return nil
 }
+
 func SendMessage(username, message string) error {
 	//set default sleep time
 	robotgo.KeySleep = 100
-	robotgo.MouseSleep = 100
+	robotgo.MouseSleep = 1000
 
 	//Open saved messages
 	robotgo.Move(100, 160)
@@ -45,7 +46,7 @@ func SendMessage(username, message string) error {
 			break
 		}
 	}
-	robotgo.MouseSleep = 100
+
 	//Send the message
 	time.Sleep(1 * time.Second)
 	robotgo.TypeStr(message)
