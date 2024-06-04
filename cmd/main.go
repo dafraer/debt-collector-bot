@@ -1,27 +1,19 @@
 package main
 
 import (
-	"collector/src/tgspam"
+	bot "collector/src/bot"
 	"log"
 )
 
-func main() {
-	if err := tgspam.OpenTelegram(); err != nil {
-		log.Fatal(err)
-	}
-	/*
-		if err := tgspam.SendMessage("@dafraer", "Ты должен мне миллион рублей"); err != nil {
-			log.Fatal(err)
-		}
-		time.Sleep(5 * time.Second)*/
-	if err := tgspam.ChangeAccount(2); err != nil {
-		log.Fatal(err)
-	}
-	if err := tgspam.ChangeAccount(3); err != nil {
-		log.Fatal(err)
-	}
-	if err := tgspam.ChangeAccount(1); err != nil {
-		log.Fatal(err)
-	}
+const (
+	DefaultInterval        = 7
+	DefaultMessageFormatRu = "Привет, %v! Хочу напомнить, что ты должен %v %v пользователю %v. Было бы здорово, если ты сможешь вернуть деньги в ближайшее время.  Если есть какие-то вопросы или тебе нужна дополнительная информация, напиши %v!  Спасибо и надеюсь на понимание."
+	DefaultMessageFormatEn = "Hey %v!  Just a quick reminder that you owe %v %v to the user %v. It would be great if you could return the money soon.  If you have any questions or need more information, just let %v know!  Thanks and hope you understand."
+)
 
+func main() {
+	tgbot := bot.NewBot(DefaultInterval, DefaultMessageFormatRu, DefaultMessageFormatEn)
+	if err := tgbot.Run(); err != nil {
+		log.Fatal(err)
+	}
 }

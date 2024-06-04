@@ -1,9 +1,10 @@
 package db
 
 type Debt struct {
-	debtorUsername string
+	DebtorUsername string
 	OwnerUsername  string
 	Amount         int
+	Currency       string
 	Description    string
 	Date           string
 	Language       string

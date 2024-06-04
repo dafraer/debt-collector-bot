@@ -2,6 +2,7 @@ package tgspam
 
 import (
 	"github.com/go-vgo/robotgo"
+	"time"
 )
 
 func OpenTelegram() error {
@@ -14,7 +15,8 @@ func OpenTelegram() error {
 }
 func SendMessage(username, message string) error {
 	//set default sleep time
-	robotgo.MouseSleep = 1000
+	robotgo.KeySleep = 100
+	robotgo.MouseSleep = 100
 
 	//Open saved messages
 	robotgo.Move(100, 160)
@@ -28,13 +30,24 @@ func SendMessage(username, message string) error {
 		return err
 	}
 
-	//Open chat with the user and send message
-	//TODO If user has long bio, message wont be sent; fix is needed
-	//Maybe copy bio and check if its long manually, cant think of a better solution rn
+	//Open user profile
 	robotgo.Move(760, 1010)
 	robotgo.Click()
-	robotgo.Move(960, 500)
-	robotgo.Click()
+
+	//Find send message button
+	robotgo.MouseSleep = 1
+	for i := 0; i < 500; i++ {
+		robotgo.Move(900, 800-i)
+		color := robotgo.GetPixelColor(900, 800-i)
+		if color == "4c7aa5" {
+			time.Sleep(1 * time.Second)
+			robotgo.Click()
+			break
+		}
+	}
+	robotgo.MouseSleep = 100
+	//Send the message
+	time.Sleep(1 * time.Second)
 	robotgo.TypeStr(message)
 	if err := robotgo.KeyTap("enter"); err != nil {
 		return err
