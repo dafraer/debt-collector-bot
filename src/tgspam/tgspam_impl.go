@@ -18,6 +18,7 @@ func SendMessage(username, message string) error {
 	//set default sleep time
 	robotgo.KeySleep = 100
 	robotgo.MouseSleep = 1000
+	time.Sleep(time.Second)
 
 	//Open saved messages
 	robotgo.Move(100, 160)
@@ -48,7 +49,7 @@ func SendMessage(username, message string) error {
 	}
 
 	//Send the message
-	time.Sleep(1 * time.Second)
+	time.Sleep(time.Second)
 	robotgo.TypeStr(message)
 	if err := robotgo.KeyTap("enter"); err != nil {
 		return err
@@ -56,6 +57,8 @@ func SendMessage(username, message string) error {
 	return nil
 }
 
+// Account numeration starts from one
+// Currently there are 3 accounts
 func ChangeAccount(accountNumber int) error {
 	//set default sleep time
 	robotgo.MouseSleep = 1000

@@ -12,7 +12,7 @@ const (
 )
 
 func main() {
-	tgbot := bot.NewBot(DefaultInterval, DefaultMessageFormatRu, DefaultMessageFormatEn)
+	tgbot := bot.NewBot(1, DefaultMessageFormatRu, DefaultMessageFormatEn)
 	if err := tgbot.Run(); err != nil {
 		log.Fatal(err)
 	}

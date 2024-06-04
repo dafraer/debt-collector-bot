@@ -5,7 +5,6 @@ type Debt struct {
 	OwnerUsername  string
 	Amount         int
 	Currency       string
-	Description    string
 	Date           string
 	Language       string
 }

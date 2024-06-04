@@ -6,11 +6,11 @@ func GetDebtInfo() ([]Debt, error) {
 	var a, b, c, d Debt
 	a.DebtorUsername = "@dafraer"
 	a.OwnerUsername = "@fiodop"
-	a.Amount = 100
+	a.Amount = 1488
 	a.Currency = "RUB"
 	a.Language = "en"
 
-	b.DebtorUsername = "@fiodop"
+	b.DebtorUsername = "@dafraer"
 	b.OwnerUsername = "@dafraer"
 	b.Amount = 230
 	b.Currency = "RUB"
