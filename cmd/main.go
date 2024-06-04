@@ -1,17 +1,13 @@
 package main
 
 import (
-	"github.com/go-vgo/robotgo"
+	"collector/src/tgspam"
+	"log"
 )
 
 func main() {
-	robotgo.MouseSleep = 100
+	if err := tgspam.SendMessage("@fiodop", "Ты должен мне миллион рублей"); err != nil {
+		log.Fatal(err)
+	}
 
-	robotgo.Move(700, 870)
-
-	robotgo.Click()
-
-	robotgo.TypeStr("Ты должен мне миллион рублей")
-
-	robotgo.KeyTap("enter")
 }
