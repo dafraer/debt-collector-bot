@@ -17,7 +17,7 @@ func GetDebtInfo() ([]Debt, error) {
 	b.Language = "ru"
 
 	c.DebtorUsername = "@dafraer"
-	c.OwnerUsername = "@Fleitas_Tobias14"
+	c.OwnerUsername = "@gonzalezthefast"
 	c.Amount = 22
 	c.Currency = "GEL"
 	c.Language = "en"

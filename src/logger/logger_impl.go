@@ -81,7 +81,7 @@ func (l *logger) log(level Level, msg string, keyVals []interface{}) {
 		log.Println("Unable to marshal json", err.Error())
 	}
 
-	l.logger.Printf("%s\t[%s]\t%s\n", time.Now().String(), level.String(), string(jsonData))
+	l.logger.Printf("%s\t[%s]\t%s\n", time.Now().Format(time.DateTime), level.String(), string(jsonData))
 }
 
 func (l *logger) Info(msg string, keyVals ...interface{}) {

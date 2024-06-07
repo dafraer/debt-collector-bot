@@ -2,7 +2,6 @@ package main
 
 import (
 	bot "collector/src/bot"
-	"log"
 )
 
 const (
@@ -13,7 +12,8 @@ const (
 
 func main() {
 	tgbot := bot.NewBot(1, DefaultMessageFormatRu, DefaultMessageFormatEn)
+	tgbot.Logger.Info("New bot created")
 	if err := tgbot.Run(); err != nil {
-		log.Fatal(err)
+		tgbot.Logger.Error("Error running bot", "error", err)
 	}
 }

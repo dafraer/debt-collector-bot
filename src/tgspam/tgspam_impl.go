@@ -1,6 +1,8 @@
 package tgspam
 
 import (
+	"collector/src/logger"
+	"fmt"
 	"github.com/go-vgo/robotgo"
 	"time"
 )
@@ -51,7 +53,7 @@ func SendMessage(username, message string) error {
 		}
 	}
 	if !exists {
-		return nil
+		return fmt.Errorf("unable to locate SEND MESSAGE field")
 	}
 
 	//Send the message
@@ -73,6 +75,8 @@ func ChangeAccount(accountNumber int) error {
 	robotgo.Move(30, 80)
 	robotgo.Click()
 	robotgo.Move(80, 170+40*accountNumber)
+	l := logger.NewLogger(3)
+	l.Debug("finding account", "position", 170+40*accountNumber)
 	robotgo.Click()
 	return nil
 }
