@@ -13,8 +13,8 @@ func (b *Bot) Run() error {
 		return err
 	}
 
-	for i := 1; i < 7; i++ {
-		//If 7 days have passed change account
+	for i := 1; i < 1; i++ {
+		//If interval amount of days have passed change account
 		if i%b.Interval == 0 && i > 1 {
 			err := tgspam.ChangeAccount((i % 4))
 			if err != nil {
@@ -44,6 +44,8 @@ func (b *Bot) Run() error {
 				if err := tgspam.SendMessage(debtors[j].DebtorUsername, fmt.Sprintf(b.MessageFormatRu, debtors[j].DebtorUsername, debtors[j].Amount, debtors[j].Currency, debtors[j].OwnerUsername, debtors[j].OwnerUsername)); err != nil {
 					return err
 				}
+				//for some reason messages in cyrillic freeze the bot so more tim for processing is needed
+				time.Sleep(15 * time.Second)
 			} else {
 				if err := tgspam.SendMessage(debtors[j].DebtorUsername, fmt.Sprintf(b.MessageFormatEn, debtors[j].DebtorUsername, debtors[j].Amount, debtors[j].Currency, debtors[j].OwnerUsername, debtors[j].OwnerUsername)); err != nil {
 					return err

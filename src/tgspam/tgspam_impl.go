@@ -37,6 +37,8 @@ func SendMessage(username, message string) error {
 	robotgo.Click()
 
 	//Find send message button
+	//flag exists is needed to check if the username is a valid telegram username
+	exists := false
 	robotgo.MouseSleep = 1
 	for i := 0; i < 500; i++ {
 		robotgo.Move(900, 800-i)
@@ -44,8 +46,12 @@ func SendMessage(username, message string) error {
 		if color == "4c7aa5" {
 			time.Sleep(1 * time.Second)
 			robotgo.Click()
+			exists = true
 			break
 		}
+	}
+	if !exists {
+		return nil
 	}
 
 	//Send the message

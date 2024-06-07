@@ -14,19 +14,19 @@ func GetDebtInfo() ([]Debt, error) {
 	b.OwnerUsername = "@dafraer"
 	b.Amount = 230
 	b.Currency = "RUB"
-	b.Language = "en"
+	b.Language = "ru"
 
-	c.DebtorUsername = "@kirooshi"
+	c.DebtorUsername = "@dafraer"
 	c.OwnerUsername = "@Fleitas_Tobias14"
 	c.Amount = 22
 	c.Currency = "GEL"
 	c.Language = "en"
 
-	d.DebtorUsername = "@Fleitas_Tobias14"
+	d.DebtorUsername = "@dafraer"
 	d.OwnerUsername = "@dafraer"
 	d.Amount = 1456
 	d.Currency = "GEL"
-	d.Language = "en"
+	d.Language = "ru"
 	s[0] = a
 	s[1] = b
 	s[2] = c
