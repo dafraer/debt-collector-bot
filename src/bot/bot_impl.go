@@ -9,7 +9,15 @@ import (
 
 func (b *Bot) Run() error {
 	currentAccount := 1
-
+	if err := db.Connect(); err != nil {
+		return err
+	}
+	defer func() {
+		err := db.Disconnect()
+		if err != nil {
+			b.Logger.Error("Error when disconnecting from db", "error", err)
+		}
+	}()
 	//Open telegram
 	if err := tgspam.OpenTelegram(); err != nil {
 		b.Logger.Error("Failed to open telegram", "error", err)
@@ -17,7 +25,7 @@ func (b *Bot) Run() error {
 	}
 	b.Logger.Info("Opened telegram")
 
-	for i := 1; i < 5; i++ {
+	for i := 1; ; i++ {
 		//If interval amount of days have passed change account
 		if i%b.Interval == 0 && i > 1 {
 			currentAccount = changeAccountNumber(currentAccount)
@@ -49,7 +57,7 @@ func (b *Bot) Run() error {
 
 		//Send messages to the debtors
 		for j := 0; j < len(debtors); j++ {
-			if debtors[j].Language == "ru" {
+			if debtors[j].Language == db.Russian {
 				if err := tgspam.SendMessage(debtors[j].DebtorUsername, fmt.Sprintf(b.MessageFormatRu, debtors[j].DebtorUsername, debtors[j].Amount, debtors[j].Currency, debtors[j].OwnerUsername, debtors[j].OwnerUsername)); err != nil {
 					b.Logger.Error("Error sending message", "error", err, "debtor", debtors[j].DebtorUsername, "language", debtors[j].Language)
 					return err
@@ -68,7 +76,7 @@ func (b *Bot) Run() error {
 		}
 
 		//Update dates of last notification
-		if err := db.UpdateDebtInfo(); err != nil {
+		if err := db.UpdateDebtInfo(debtors); err != nil {
 			b.Logger.Error("Error updating debt information", "error", err)
 			return err
 		}
@@ -76,7 +84,6 @@ func (b *Bot) Run() error {
 		//Wait for another day
 		<-day
 	}
-	return nil
 }
 
 func changeAccountNumber(accountNumber int) int {

@@ -53,7 +53,7 @@ func SendMessage(username, message string) error {
 		}
 	}
 	if !exists {
-		return fmt.Errorf("unable to locate SEND MESSAGE field")
+		return fmt.Errorf("User does not exist")
 	}
 
 	//Send the message
