@@ -18,14 +18,15 @@ func (b *Bot) Run() error {
 			b.Logger.Error("Error when disconnecting from db", "error", err)
 		}
 	}()
-	//Open telegram
-	if err := tgspam.OpenTelegram(); err != nil {
-		b.Logger.Error("Failed to open telegram", "error", err)
-		return err
-	}
-	b.Logger.Info("Opened telegram")
 
 	for i := 1; ; i++ {
+		//Open telegram
+		if err := tgspam.OpenTelegram(); err != nil {
+			b.Logger.Error("Failed to open telegram", "error", err)
+			return err
+		}
+		b.Logger.Info("Opened telegram")
+
 		//If interval amount of days have passed change account
 		if i%b.Interval == 0 && i > 1 {
 			currentAccount = changeAccountNumber(currentAccount)
@@ -41,8 +42,7 @@ func (b *Bot) Run() error {
 		//TODO change to day for now its a 1 minute interval to test
 		day := make(chan struct{})
 		go func() {
-			//time.Sleep(24 * time.Hour)
-			time.Sleep(1 * time.Minute)
+			time.Sleep(24 * time.Hour)
 			day <- struct{}{}
 			close(day)
 		}()
@@ -57,7 +57,8 @@ func (b *Bot) Run() error {
 
 		//Send messages to the debtors
 		for j := 0; j < len(debtors); j++ {
-			if debtors[j].Language == db.Russian {
+			//TODO change
+			if debtors[j].Language == db.Russian && false == true {
 				if err := tgspam.SendMessage(debtors[j].DebtorUsername, fmt.Sprintf(b.MessageFormatRu, debtors[j].DebtorUsername, debtors[j].Amount, debtors[j].Currency, debtors[j].OwnerUsername, debtors[j].OwnerUsername)); err != nil {
 					b.Logger.Error("Error sending message", "error", err, "debtor", debtors[j].DebtorUsername, "language", debtors[j].Language)
 					return err

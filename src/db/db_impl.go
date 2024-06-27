@@ -1,7 +1,6 @@
 package db
 
 import (
-	"collector/src/bot"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"time"
@@ -26,8 +25,8 @@ func GetDebtInfo() ([]Debt, error) {
 
 func UpdateDebtInfo(debts []Debt) error {
 	for _, debt := range debts {
-		debt.Time = time.Now().Add(24 * time.Hour * bot.DefaultInterval)
-		db.Save(&debt)
+		debt.Time = time.Now().Add(24 * time.Hour * 3)
+		db.Model(&Debt{}).Where("id = ?", debt.Id).Update("date_time", debt.Time)
 	}
 	return nil
 }
